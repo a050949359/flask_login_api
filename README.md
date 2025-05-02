@@ -1,5 +1,6 @@
 # flask_login_api
 flask jwt bcrypt sqlite3 mysql docker
+
 ``` shell
 $ apt update -y
 $ apt upgrade -y
@@ -16,4 +17,27 @@ $ python -m venv DevEnv
 $ source DevEnv/bin/activate
 $ pip install --upgrade pip
 $ pip3.12 install flask flask_jwt_extended mysql-connector flask-restful pysqlite3 python-dotenv bcrypt
+```
+
+content of .env 
+```config
+# sqlite or mysql
+DB_TYPE=sqlite
+
+# 
+SQLITE_INIT_FILE=lib/db/user.sql
+
+# store/flask.db or :memory:
+SQLITE_DB_PATH=store/flask.db
+
+MYSQL_HOST=192.168.4.4
+MYSQL_USER=root
+MYSQL_PASSWORD=root
+MYSQL_DATABASE=flask_test
+```
+
+if use docker-compose modify yml's volumes settings and run commands
+``` shell
+$ docker network create --driver=bridge --subnet=192.168.4.0/24  ohya-network
+$ docker-compose up -d
 ```

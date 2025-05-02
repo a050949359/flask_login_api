@@ -2,8 +2,8 @@ from flask import Flask, current_app, g, jsonify
 from flask_jwt_extended import JWTManager, jwt_required
 from datetime  import timedelta
 from dotenv import load_dotenv
-from .db import init_db_pool
-from .auth import auth_bp, register_user, login_user
+from lib.db.db import init_db_pool
+from lib.auth.auth import auth_bp, register_user, login_user
 
 import sqlite3
 import os
@@ -28,6 +28,15 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt.init_app(app)
 
+from flask import redirect, url_for
+@app.route('/')
+def home():
+    # 返回重定向到另一個路由
+    return redirect(url_for('profile'))
+
+@app.route('/profile')
+def profile():
+    return redirect("https://mail.google.com/")
 
 # test
 conn = app.db_pool

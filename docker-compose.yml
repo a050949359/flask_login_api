@@ -1,0 +1,33 @@
+services:
+    FlaskBackend:
+        image: ubuntu:latest
+        container_name: FlaskBackend
+        ports:
+            - "443:443"
+            - "8080:80"
+        volumes:
+            - C:\Users\Harold\Documents\Docker\ubuntu\data:/home/data
+        networks:
+            ohya-network:
+                ipv4_address: 192.168.4.2
+        privileged: true
+        command: ["sleep","infinity"]
+    mariadb:
+        image: mariadb:11.7.2
+        container_name: DB
+        volumes:
+            - C:\Users\Harold\Documents\Docker\ubuntu\db:/home/data
+            - C:\Users\Harold\Documents\Docker\ubuntu\db\init:/docker-entrypoint-initdb.d/
+        environment:
+            MYSQL_DATABASE: flask_test
+            MYSQL_ROOT_PASSWORD: root
+        networks:
+            ohya-network:
+                ipv4_address: 192.168.4.4
+
+networks:
+    ohya-network:
+        external: true
+        name: ohya-network
+
+#docker network create --driver=bridge --subnet=192.168.4.0/24  ohya-network
